@@ -22,25 +22,29 @@ function operation() {
       },
     ])
     .then((answer) => {
-      const action = answer['action']
+      const action = answer.action
 
       if (action === 'Criar conta') {
-        createAccount()    
-      }else if(action === 'Consultar Saldo'){
+        createAccount()
+
+      } else if (action === 'Depositar') {
         deposit()
-      }else if(action === 'Depositar'){
 
-      }else if(action === 'Sacar'){
+      } else if (action === 'Consultar Saldo') {
+        
 
-      }else if(action === 'Sair'){
-        console.log(chalk.bgBlue.black('Obrigado por usar o Account!'))
+      } else if (action === 'Sacar') {
+       
+
+      } else if (action === 'Sair') {
+        console.log(chalk.bgBlue.black('Obrigado por usar o Accounts!'))
         process.exit()
-
       }
     })
 }
 
 // create user account
+
 function createAccount() {
   console.log(chalk.bgGreen.black('Parabéns por escolher nosso banco!'))
   console.log(chalk.green('Defina as opções da sua conta a seguir'))
@@ -70,7 +74,6 @@ function buildAccount() {
           chalk.bgRed.black('Esta conta já existe, escolha outro nome!'),
         )
         buildAccount(accountName)
-        return
       }
 
       fs.writeFileSync(
@@ -86,9 +89,56 @@ function buildAccount() {
     })
 }
 
-// create deposit
+// add an amount to user account
+function deposit() {
+  inquirer
+    .prompt([
+      {
+        name: 'accountName',
+        message: 'Qual o nome da sua conta?',
+      },
+    ])
+    .then((answer) => {
+      const accountName = answer['accountName']
 
-function deposit(){
+      // verify if account exist
 
+      if (!checkAccount(accountName)) {
+        return deposit()
+      }
+
+      
+      inquirer
+        .prompt([
+          {
+            name: 'amount',
+            message: 'Quanto você deseja depositar?',
+          },
+        ])
+        .then((answer) => {
+          const amount = answer.amount
+
+          // add and amount
+
+          addAmount(accountName, amount)
+          operation()
+        })
+        .catch(err => console.log(err))
+    })
+}
+
+function checkAccount(accountName) {
+  if (!fs.existsSync(`accounts/${accountName}.json`)) {
+    console.log(chalk.bgRed.black('Esta conta não existe, escolha outro nome!'))
+    return false
+  }
+  return true
+}
+
+
+function addAmount(accountName, amount){
+  
 
 }
+
+
