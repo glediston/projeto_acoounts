@@ -27,13 +27,14 @@ function operation() {
       if (action === 'Criar conta') {
         createAccount()    
       }else if(action === 'Consultar Saldo'){
-
+        deposit()
       }else if(action === 'Depositar'){
 
       }else if(action === 'Sacar'){
 
       }else if(action === 'Sair'){
         console.log(chalk.bgBlue.black('Obrigado por usar o Account!'))
+        process.exit()
 
       }
     })
@@ -83,4 +84,11 @@ function buildAccount() {
       console.log(chalk.green('Parabéns, sua conta foi criada!'))
       operation()
     })
+}
+
+// create deposit
+
+function deposit(){
+
+
 }
