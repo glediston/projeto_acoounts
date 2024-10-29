@@ -193,43 +193,36 @@ function addAmount(accountName, amount) {
 
 
 // withdraw an amount from user account  
+
 function withdraw() {
-  
-  
   inquirer
-  .prompt([{
- name: 'accountName',
- message: 'Qual o nome da sua conta?'
+    .prompt([
+      {
+        name: 'accountName',
+        message: 'Qual o nome da sua conta?',
+      },
+    ])
+    .then((answer) => {
+      const accountName = answer['accountName']
 
+      if (!checkAccount(accountName)) {
+        return withdraw()
+      }
 
-}
-]).then((answer) => {
+      inquirer
+        .prompt([
+          {
+            name: 'amount',
+            message: 'Quanto você deseja sacar?',
+          },
+        ])
+        .then((answer) => {
+          const amount = answer['amount']
 
-  const accountName = answer.accountName
-
-  if(!checkAccount(accountName)){
-
-    return withdraw()
-}
-
-})
-
-inquirer
-.prompt([
-  {
-    name: 'amount',
-    message: 'Quanto você deseja sacar?',
-  },
-])
-.then((answer) => {
-  const amount = answer['amount']
-
-  removeAmount(accountName, amount)
-  operation()
-})
-
-.catch(err => console.log(err))
-
+          removeAmount(accountName, amount)
+          operation()
+        })
+    })
 }
 
 function removeAmount(accountName, amount) {
