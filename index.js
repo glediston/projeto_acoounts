@@ -159,3 +159,31 @@ function addAmount(accountName, amount) {
 }
 
 // Show account balance
+
+function getAccountBalance() {
+  inquirer
+  .prompt([{
+    name: "AccountName",
+    message: "Qual o nome da sua conta?"
+
+  }
+
+]).then((answer) => {
+  const accountName = answer.accountName
+
+  // verify if account exist
+
+  if(!checkAccount(accountName)){
+    return getAccountBalance()
+  }
+
+  const accountData = getAccount(accountName)
+
+  console.log(chalk.bgBlue.black(`Olá, o saldo da sua conta é R$${accountData.balance}`))
+
+  operation()
+
+}) .catch(err => console.log(err))
+  
+
+}
