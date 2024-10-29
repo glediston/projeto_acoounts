@@ -190,3 +190,18 @@ function addAmount(accountName, amount) {
 
 }) .catch(err => console.log(err))
 }
+
+
+// withdraw an amount from user account  
+function withdraw() {
+  
+  
+  inquirer
+  .prompt([{
+ 
+
+
+
+}])
+
+}
